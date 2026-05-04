@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# 네이버 검색 봇
+User-agent: Yeti
+Allow: /
+
+# 구글 검색 봇
+User-agent: Googlebot
+Allow: /
+
+# Sitemap
+Sitemap: https://grace-garden.kr/sitemap.xml
