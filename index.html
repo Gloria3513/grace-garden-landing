@@ -100,76 +100,138 @@
       position: relative;
       min-height: 100vh;
       overflow: hidden;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--charcoal);
     }
 
-    .hero-bg { display: none; }
+    .hero-bg {
+      position: absolute;
+      top: -6%; left: -8%;
+      width: 116%; height: 112%;
+      background-image: url('images/kakao-work-2.jpg');
+      background-size: cover;
+      background-position: center 30%;
+      filter: brightness(0.55) saturate(1.05);
+      will-change: transform;
+      animation: heroDrift 28s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes heroDrift {
+      0%   { transform: translate3d(-2%, -1%, 0) scale(1.06); }
+      25%  { transform: translate3d( 1.5%, -2%, 0) scale(1.10); }
+      50%  { transform: translate3d( 3%,  1%, 0) scale(1.13); }
+      75%  { transform: translate3d( 0%,  2%, 0) scale(1.10); }
+      100% { transform: translate3d(-3%,  0.5%, 0) scale(1.06); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-bg { animation: none; transform: scale(1.06); }
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(20,14,8,0.55) 0%, rgba(20,14,8,0.25) 50%, rgba(168,90,48,0.35) 100%);
+      z-index: 1;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute; left: 0; right: 0; bottom: 0; height: 30%;
+      background: linear-gradient(to top, rgba(20,14,8,0.85), transparent);
+      z-index: 1;
+    }
 
     .hero-content {
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 120px 60px 80px 80px;
-      max-width: 640px;
-    }
-
-    .hero-images {
-      position: relative;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      padding: 100px 40px 60px 0;
-      align-content: center;
-    }
-
-    .hero-img {
-      border-radius: 20px;
-      object-fit: cover;
+      position: relative; z-index: 2;
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+      padding: 140px 32px 100px;
+      max-width: 1100px;
       width: 100%;
-      box-shadow: 0 12px 40px rgba(44,36,24,0.12);
     }
-
-    .hero-img:nth-child(1) { height: 320px; }
-    .hero-img:nth-child(2) { height: 320px; margin-top: 40px; }
-    .hero-img:nth-child(3) { height: 240px; margin-top: -20px; }
-    .hero-img:nth-child(4) { height: 240px; margin-top: 20px; }
 
     .hero-tag {
       display: inline-block;
-      background: rgba(196,112,63,0.1);
-      color: var(--terra);
+      background: rgba(255,253,249,0.12);
+      backdrop-filter: blur(8px);
+      color: var(--white);
       font-size: 12px; font-weight: 700;
-      letter-spacing: 3px;
-      padding: 8px 20px;
+      letter-spacing: 4px;
+      padding: 10px 22px;
+      border: 1px solid rgba(255,253,249,0.25);
       border-radius: 30px;
-      margin-bottom: 24px;
+      margin-bottom: 32px;
       text-transform: uppercase;
-      width: fit-content;
     }
 
     .hero-title {
-      font-size: clamp(36px, 5vw, 56px);
+      font-size: clamp(42px, 6.4vw, 84px);
       font-weight: 800;
-      color: var(--charcoal);
-      line-height: 1.3;
-      margin-bottom: 20px;
+      color: var(--white);
+      line-height: 1.18;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+      text-shadow: 0 4px 30px rgba(0,0,0,0.45);
     }
 
     .hero-title em {
       font-style: normal;
-      color: var(--terra);
+      color: var(--terra-light);
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
     }
 
     .hero-sub {
-      font-size: 17px;
-      color: var(--text-mid);
+      font-size: clamp(15px, 1.4vw, 19px);
+      color: rgba(255,253,249,0.88);
       font-weight: 400;
-      margin-bottom: 36px;
-      line-height: 1.8;
+      max-width: 620px;
+      margin-bottom: 44px;
+      line-height: 1.85;
+      text-shadow: 0 2px 14px rgba(0,0,0,0.4);
+    }
+
+    .hero-btns {
+      justify-content: center;
+    }
+
+    .hero-scroll {
+      position: absolute; bottom: 32px; left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      color: rgba(255,253,249,0.7);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+
+    .hero-scroll-line {
+      width: 1px; height: 38px;
+      background: linear-gradient(to bottom, transparent, rgba(255,253,249,0.7));
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(0.7); }
+      50% { opacity: 1; transform: scaleY(1); }
     }
 
     .hero-btns {
       display: flex; gap: 14px; flex-wrap: wrap;
+    }
+
+    .hero .btn-outline {
+      color: var(--white);
+      border-color: rgba(255,253,249,0.5);
+    }
+    .hero .btn-outline:hover {
+      border-color: var(--white);
+      background: rgba(255,253,249,0.1);
     }
 
     .btn-primary {
@@ -592,50 +654,200 @@
       box-shadow: 0 8px 25px rgba(196,112,63,0.3);
     }
 
-    /* ── Process ── */
-    .process { background: var(--charcoal); color: var(--white); text-align: center; }
-    .process .section-tag { color: var(--terra-light); background: rgba(196,112,63,0.15); }
-    .process .section-title { color: var(--white); }
+    /* ── Schedule ── */
+    .schedule { background: var(--bg); text-align: center; }
 
-    .process-steps {
-      display: flex; gap: 20px;
-      margin-top: 60px; max-width: 1000px;
+    .schedule-month {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 600;
+      color: var(--terra);
+      letter-spacing: 4px;
+      margin: 36px 0 20px;
+    }
+
+    .schedule-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 10px;
+      max-width: 980px;
+      margin: 28px auto 0;
+    }
+
+    .schedule-dow {
+      font-size: 12px; font-weight: 700;
+      letter-spacing: 2px; color: var(--text-light);
+      padding: 12px 0;
+      text-transform: uppercase;
+    }
+    .schedule-dow.sun { color: #C84726; }
+
+    .schedule-day {
+      background: var(--white);
+      border-radius: 14px;
+      padding: 14px 10px 16px;
+      min-height: 110px;
+      text-align: left;
+      box-shadow: 0 2px 12px rgba(44,36,24,0.05);
+      border: 1.5px solid transparent;
+      transition: all 0.3s;
+      display: flex; flex-direction: column;
+    }
+
+    .schedule-day.empty {
+      background: transparent;
+      box-shadow: none;
+      pointer-events: none;
+    }
+
+    .schedule-day.has-class {
+      cursor: pointer;
+      border-color: rgba(196,112,63,0.18);
+    }
+
+    .schedule-day.has-class:hover {
+      transform: translateY(-3px);
+      border-color: var(--terra);
+      box-shadow: 0 12px 30px rgba(196,112,63,0.15);
+    }
+
+    .schedule-date {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px; font-weight: 700;
+      color: var(--charcoal);
+      margin-bottom: 6px;
+    }
+    .schedule-date.sun { color: #C84726; }
+
+    .schedule-class {
+      font-size: 11px; font-weight: 600;
+      color: var(--text);
+      line-height: 1.4;
+      margin-bottom: 4px;
+    }
+
+    .schedule-time {
+      font-size: 10px;
+      color: var(--text-light);
+      margin-bottom: auto;
+    }
+
+    .schedule-status {
+      display: inline-block;
+      font-size: 9px; font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 10px;
+      letter-spacing: 0.5px;
+      margin-top: 6px;
+      width: fit-content;
+    }
+    .schedule-status.open { background: rgba(107,124,78,0.15); color: var(--olive); }
+    .schedule-status.few { background: rgba(196,112,63,0.15); color: var(--terra-deep); }
+    .schedule-status.closed { background: rgba(141,128,110,0.15); color: var(--text-light); }
+
+    .schedule-cta {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--terra);
+      color: var(--white);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 15px; font-weight: 600;
+      padding: 16px 40px;
+      border: none; border-radius: 50px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 44px;
+    }
+    .schedule-cta:hover {
+      background: var(--terra-deep);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(196,112,63,0.35);
+    }
+    .kakao-cta {
+      background: #FEE500 !important;
+      color: #3C1E1E !important;
+    }
+    .kakao-cta:hover {
+      background: #F7D900 !important;
+      box-shadow: 0 10px 30px rgba(254,229,0,0.45) !important;
+    }
+
+    .schedule-legend {
+      display: flex; justify-content: center; gap: 18px;
+      margin-top: 28px; flex-wrap: wrap;
+    }
+    .schedule-legend-item {
+      font-size: 12px; color: var(--text-light);
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .schedule-legend-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+    }
+
+    /* ── Reviews ── */
+    .reviews { background: var(--bg-warm); text-align: center; }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 22px;
+      margin-top: 56px;
+      max-width: 1180px;
       margin-left: auto; margin-right: auto;
     }
 
-    .process-step {
-      flex: 1;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 40px 28px;
-      text-align: center;
-      position: relative;
-      transition: background 0.3s;
+    .review-card {
+      background: var(--white);
+      padding: 14px 14px 26px;
+      box-shadow: 0 8px 28px rgba(44,36,24,0.1);
+      transform: rotate(-1.2deg);
+      transition: transform 0.4s, box-shadow 0.4s;
+      text-align: left;
+      border-radius: 4px;
+    }
+    .review-card:nth-child(2) { transform: rotate(1.4deg); }
+    .review-card:nth-child(3) { transform: rotate(-0.8deg); }
+    .review-card:nth-child(4) { transform: rotate(1.1deg); }
+
+    .review-card:hover {
+      transform: rotate(0deg) translateY(-8px);
+      box-shadow: 0 18px 50px rgba(44,36,24,0.18);
     }
 
-    .process-step:hover {
-      background: rgba(255,255,255,0.08);
+    .review-img {
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      border-radius: 2px;
+      margin-bottom: 14px;
     }
 
-    .process-num {
+    .review-stars {
+      color: #E8A33D;
+      font-size: 14px; letter-spacing: 2px;
+      padding: 0 6px;
+      margin-bottom: 8px;
+    }
+
+    .review-text {
+      font-size: 13px; color: var(--text);
+      line-height: 1.65;
+      padding: 0 6px;
+      margin-bottom: 12px;
+      min-height: 60px;
+    }
+
+    .review-author {
+      font-size: 12px; font-weight: 600;
+      color: var(--text-mid);
+      padding: 0 6px;
       font-family: 'Playfair Display', serif;
-      font-size: 48px; font-weight: 700;
-      color: var(--terra);
-      margin-bottom: 16px;
-      line-height: 1;
+      letter-spacing: 1px;
     }
-
-    .process-step h4 {
-      font-size: 18px; font-weight: 600;
-      margin-bottom: 10px;
-      color: var(--white);
-    }
-
-    .process-step p {
-      font-size: 14px;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.7;
+    .review-author span {
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--text-light);
+      font-weight: 400;
+      letter-spacing: 0;
     }
 
     /* ── Contact ── */
@@ -653,45 +865,74 @@
     }
 
     .contact-channels {
-      display: flex; justify-content: center; align-items: center;
-      gap: 40px; margin-bottom: 50px;
+      display: flex; justify-content: center; align-items: flex-start;
+      gap: 64px; margin-bottom: 50px; flex-wrap: wrap;
     }
 
-    .contact-channel { text-align: center; }
+    .contact-channel { text-align: center; max-width: 240px; }
 
     .contact-channel-icon {
-      width: 70px; height: 70px;
-      background: var(--white);
-      border-radius: 20px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 14px;
-      box-shadow: 0 6px 20px rgba(44,36,24,0.08);
-      transition: all 0.4s;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin: 0 auto 18px;
+      transition: transform 0.4s ease;
       text-decoration: none;
+      background: transparent;
+      border: none;
+      padding: 0;
     }
 
     .contact-channel:hover .contact-channel-icon {
-      transform: translateY(-6px);
-      box-shadow: 0 14px 35px rgba(196,112,63,0.15);
-      background: var(--terra);
+      transform: translateY(-6px) scale(1.05);
     }
 
     .contact-channel-icon svg {
-      width: 28px; height: 28px;
+      width: 64px; height: 64px;
       fill: var(--terra);
-      transition: fill 0.4s;
+      transition: fill 0.4s ease, filter 0.4s ease;
+      filter: drop-shadow(0 4px 14px rgba(44,36,24,0.18));
     }
 
     .contact-channel:hover .contact-channel-icon svg {
-      fill: var(--white);
+      fill: var(--terra-deep);
+      filter: drop-shadow(0 8px 22px rgba(196,112,63,0.4));
     }
 
-    .contact-channel span {
+    .contact-channel.kakao .contact-channel-icon svg {
+      fill: #3C1E1E;
+    }
+    .contact-channel.kakao .contact-channel-icon::before {
+      content: '';
+      position: absolute;
+      width: 64px; height: 64px;
+      background: #FEE500;
+      border-radius: 18px;
+      z-index: -1;
+      transition: all 0.4s ease;
+    }
+    .contact-channel.kakao .contact-channel-icon {
+      position: relative;
+      isolation: isolate;
+      width: 64px; height: 64px;
+    }
+    .contact-channel.kakao .contact-channel-icon svg {
+      width: 36px; height: 36px;
+      filter: none;
+    }
+    .contact-channel.kakao:hover .contact-channel-icon::before {
+      background: #F7D900;
+      box-shadow: 0 10px 26px rgba(254,229,0,0.5);
+    }
+    .contact-channel.kakao:hover .contact-channel-icon svg {
+      fill: #3C1E1E;
+    }
+
+    .contact-channel > span {
       font-size: 12px; font-weight: 700;
       letter-spacing: 2px; color: var(--text-light);
+      display: block;
     }
 
-    .contact-channel a {
+    .contact-channel a:not(.contact-channel-icon) {
       color: var(--text-mid);
       text-decoration: none;
       font-size: 14px; font-weight: 500;
@@ -699,7 +940,7 @@
       transition: color 0.3s;
     }
 
-    .contact-channel a:hover { color: var(--terra); }
+    .contact-channel a:not(.contact-channel-icon):hover { color: var(--terra); }
 
     .contact-cta {
       display: inline-flex; align-items: center; gap: 10px;
@@ -810,23 +1051,20 @@
       .nav-links { display: none; }
       .nav-toggle { display: block; }
       .section-pad { padding: 70px 24px; }
-      .hero { grid-template-columns: 1fr; min-height: auto; }
-      .hero-content { padding: 120px 24px 40px; }
-      .hero-images { padding: 0 24px 40px; grid-template-columns: 1fr 1fr; }
-      .hero-img:nth-child(1) { height: 200px; }
-      .hero-img:nth-child(2) { height: 200px; margin-top: 20px; }
-      .hero-img:nth-child(3) { height: 160px; margin-top: -10px; }
-      .hero-img:nth-child(4) { height: 160px; margin-top: 10px; }
-      .hero-title { font-size: 32px; }
-      .hero-btns { flex-direction: column; }
+      .hero-content { padding: 120px 22px 90px; }
+      .hero-title { font-size: 38px; line-height: 1.25; }
+      .hero-sub { font-size: 15px; }
+      .hero-btns { flex-direction: column; width: 100%; }
       .btn-primary, .btn-outline { width: 100%; justify-content: center; }
+      .hero-scroll { display: none; }
       .services-grid { grid-template-columns: 1fr; }
       .service-card-img { height: 280px; }
       .gallery-grid { grid-template-columns: repeat(2, 1fr); }
       .gallery-item.tall, .gallery-item.wide { grid-row: span 1; grid-column: span 1; }
       .packages-grid { grid-template-columns: 1fr; max-width: 400px; }
-      .process-steps { flex-direction: column; }
-      .process-step { min-width: 100%; }
+      .schedule-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      .schedule-day { font-size: 13px !important; padding: 10px 8px !important; }
+      .reviews-grid { grid-template-columns: 1fr !important; }
       .contact-channels { flex-direction: column; gap: 24px; }
       .about-stats { flex-direction: column; gap: 12px; }
       footer { flex-direction: column; gap: 20px; text-align: center; }
@@ -843,6 +1081,8 @@
       <li><a href="#services">서비스</a></li>
       <li><a href="#portfolio">포트폴리오</a></li>
       <li><a href="#packages">패키지</a></li>
+      <li><a href="#schedule">수업 일정</a></li>
+      <li><a href="#reviews">후기</a></li>
       <li><a href="#contact">문의</a></li>
     </ul>
     <button class="nav-toggle" onclick="toggleMenu()">
@@ -854,23 +1094,21 @@
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="hero-content">
-      <span class="hero-tag">Flower Art & Space Design</span>
-      <h1 class="hero-title"><em>꽃</em>으로 배우고,<br><em>공간</em>으로 완성합니다</h1>
-      <p class="hero-sub">10년의 경험으로 일상에 꽃을 더하고,<br>특별한 순간의 공간을 디자인합니다.</p>
+      <span class="hero-tag">Premium Flower Art Studio</span>
+      <h1 class="hero-title"><em>10년의 감각</em>으로 디자인하는<br>프리미엄 <em>플라워 아트</em></h1>
+      <p class="hero-sub">한 송이의 결을 읽어내는 손끝, 공간의 호흡까지 설계하는 시선.<br>그레이스 가든은 일상과 특별한 순간 모두를 꽃으로 완성합니다.</p>
       <div class="hero-btns">
-        <a href="#contact" class="btn-primary">
-          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-          수업 문의하기
+        <a href="#schedule" class="btn-primary">
+          <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor;"><path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.9 4 3 4.9 3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zM5 8V6h14v2H5zm2 4h5v5H7z"/></svg>
+          이번 달 수업 보기
         </a>
         <a href="#portfolio" class="btn-outline">포트폴리오 보기</a>
       </div>
     </div>
-    <div class="hero-images">
-      <img class="hero-img" src="images/꽃2.jpg" alt="구조물 꽃꽂이">
-      <img class="hero-img" src="images/신부대기실.jpg" alt="공간 연출">
-      <img class="hero-img" src="images/여름화초.jpg" alt="여름 화초">
-      <img class="hero-img" src="images/바구니2.jpg" alt="꽃바구니">
-    </div>
+    <a href="#about" class="hero-scroll">
+      <span>SCROLL</span>
+      <span class="hero-scroll-line"></span>
+    </a>
   </section>
 
   <!-- About -->
@@ -988,6 +1226,18 @@
         <img src="images/바구니2.jpg" alt="꽃바구니 수업">
         <div class="gallery-overlay"><span>꽃바구니 수업</span></div>
       </div>
+      <div class="gallery-item" data-category="class" onclick="openLightbox(this)">
+        <img src="images/kakao-class-1.jpg" alt="단체 꽃꽂이 수업 현장">
+        <div class="gallery-overlay"><span>단체 꽃꽂이 수업</span></div>
+      </div>
+      <div class="gallery-item" data-category="class" onclick="openLightbox(this)">
+        <img src="images/kakao-class-2.jpg" alt="강의 현장">
+        <div class="gallery-overlay"><span>출강 강의 현장</span></div>
+      </div>
+      <div class="gallery-item" data-category="work" onclick="openLightbox(this)">
+        <img src="images/kakao-work-1.jpg" alt="공간 꽃 장식 작품">
+        <div class="gallery-overlay"><span>공간 꽃 장식</span></div>
+      </div>
       <div class="gallery-item" data-category="work" onclick="openLightbox(this)">
         <img src="images/전2.jpg" alt="전시 작품">
         <div class="gallery-overlay"><span>전시 작품</span></div>
@@ -1076,30 +1326,177 @@
     </div>
   </section>
 
-  <!-- Process -->
-  <section class="process section-pad">
-    <span class="section-tag">Process</span>
-    <h2 class="section-title">진행 과정</h2>
-    <div class="process-steps">
-      <div class="process-step fade-up">
-        <div class="process-num">01</div>
-        <h4>상담</h4>
-        <p>목적, 컨셉, 예산 등<br>사전 상담을 진행합니다</p>
+  <!-- Monthly Class Schedule -->
+  <section class="schedule section-pad" id="schedule">
+    <span class="section-tag">Monthly Class</span>
+    <h2 class="section-title">5월 수업 일정</h2>
+    <p class="section-desc" style="margin:0 auto;">일정을 확인하고, 원하는 날짜의 수업을 신청해 주세요</p>
+    <div class="schedule-month">May · 2026</div>
+
+    <div class="schedule-grid">
+      <div class="schedule-dow sun">Sun</div>
+      <div class="schedule-dow">Mon</div>
+      <div class="schedule-dow">Tue</div>
+      <div class="schedule-dow">Wed</div>
+      <div class="schedule-dow">Thu</div>
+      <div class="schedule-dow">Fri</div>
+      <div class="schedule-dow">Sat</div>
+
+      <!-- Week 1: May 1 = Friday -->
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day"><div class="schedule-date">1</div></div>
+      <div class="schedule-day"><div class="schedule-date">2</div></div>
+
+      <!-- Week 2 -->
+      <div class="schedule-day"><div class="schedule-date sun">3</div></div>
+      <div class="schedule-day"><div class="schedule-date">4</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">5</div>
+        <div class="schedule-class">계절 꽃바구니</div>
+        <div class="schedule-time">10:30 ~ 12:30</div>
+        <span class="schedule-status open">모집중</span>
       </div>
-      <div class="process-step fade-up fade-up-delay">
-        <div class="process-num">02</div>
-        <h4>기획</h4>
-        <p>맞춤 디자인과<br>꽃 구성을 제안합니다</p>
+      <div class="schedule-day"><div class="schedule-date">6</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">7</div>
+        <div class="schedule-class">초보자 클래스</div>
+        <div class="schedule-time">14:00 ~ 16:00</div>
+        <span class="schedule-status open">모집중</span>
       </div>
-      <div class="process-step fade-up fade-up-delay2">
-        <div class="process-num">03</div>
-        <h4>제작</h4>
-        <p>신선한 꽃으로<br>정성껏 제작합니다</p>
+      <div class="schedule-day"><div class="schedule-date">8</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">9</div>
+        <div class="schedule-class">센터피스 디자인</div>
+        <div class="schedule-time">11:00 ~ 13:30</div>
+        <span class="schedule-status few">잔여 2석</span>
       </div>
-      <div class="process-step fade-up">
-        <div class="process-num">04</div>
-        <h4>완성</h4>
-        <p>설치부터 마무리까지<br>책임지고 진행합니다</p>
+
+      <!-- Week 3 -->
+      <div class="schedule-day"><div class="schedule-date sun">10</div></div>
+      <div class="schedule-day"><div class="schedule-date">11</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">12</div>
+        <div class="schedule-class">시니어 꽃 수업</div>
+        <div class="schedule-time">10:30 ~ 12:00</div>
+        <span class="schedule-status open">모집중</span>
+      </div>
+      <div class="schedule-day"><div class="schedule-date">13</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">14</div>
+        <div class="schedule-class">스승의날 카네이션</div>
+        <div class="schedule-time">15:00 ~ 17:00</div>
+        <span class="schedule-status closed">마감</span>
+      </div>
+      <div class="schedule-day"><div class="schedule-date">15</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">16</div>
+        <div class="schedule-class">5월 리스 만들기</div>
+        <div class="schedule-time">11:00 ~ 13:00</div>
+        <span class="schedule-status open">모집중</span>
+      </div>
+
+      <!-- Week 4 -->
+      <div class="schedule-day"><div class="schedule-date sun">17</div></div>
+      <div class="schedule-day"><div class="schedule-date">18</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">19</div>
+        <div class="schedule-class">정기 클래스</div>
+        <div class="schedule-time">10:30 ~ 12:30</div>
+        <span class="schedule-status few">잔여 1석</span>
+      </div>
+      <div class="schedule-day"><div class="schedule-date">20</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">21</div>
+        <div class="schedule-class">브라이덜 샤워 워크숍</div>
+        <div class="schedule-time">14:00 ~ 17:00</div>
+        <span class="schedule-status open">모집중</span>
+      </div>
+      <div class="schedule-day"><div class="schedule-date">22</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">23</div>
+        <div class="schedule-class">디지털 점검 + 꽃</div>
+        <div class="schedule-time">13:00 ~ 14:30</div>
+        <span class="schedule-status open">모집중</span>
+      </div>
+
+      <!-- Week 5 -->
+      <div class="schedule-day"><div class="schedule-date sun">24</div></div>
+      <div class="schedule-day"><div class="schedule-date">25</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">26</div>
+        <div class="schedule-class">계절 꽃 클래스</div>
+        <div class="schedule-time">10:30 ~ 12:30</div>
+        <span class="schedule-status open">모집중</span>
+      </div>
+      <div class="schedule-day"><div class="schedule-date">27</div></div>
+      <div class="schedule-day has-class">
+        <div class="schedule-date">28</div>
+        <div class="schedule-class">여름 화초 입문</div>
+        <div class="schedule-time">14:00 ~ 16:00</div>
+        <span class="schedule-status open">모집중</span>
+      </div>
+      <div class="schedule-day"><div class="schedule-date">29</div></div>
+      <div class="schedule-day"><div class="schedule-date">30</div></div>
+
+      <!-- Week 6 -->
+      <div class="schedule-day"><div class="schedule-date sun">31</div></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+      <div class="schedule-day empty"></div>
+    </div>
+
+    <div class="schedule-legend">
+      <span class="schedule-legend-item"><span class="schedule-legend-dot" style="background:var(--olive);"></span>모집중</span>
+      <span class="schedule-legend-item"><span class="schedule-legend-dot" style="background:var(--terra-deep);"></span>잔여 소수</span>
+      <span class="schedule-legend-item"><span class="schedule-legend-dot" style="background:var(--text-light);"></span>마감</span>
+    </div>
+
+    <a href="https://open.kakao.com/o/s2tgrpti" target="_blank" rel="noopener" class="schedule-cta kakao-cta">
+      <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:#3C1E1E;"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.78 1.86 5.22 4.66 6.59-.2.71-.74 2.65-.85 3.06-.13.51.19.5.4.36.16-.1 2.6-1.77 3.66-2.49.7.1 1.42.16 2.13.16 5.52 0 10-3.48 10-7.78S17.52 3 12 3z"/></svg>
+      카카오톡으로 수업 신청하기
+    </a>
+  </section>
+
+  <!-- Customer Reviews -->
+  <section class="reviews section-pad" id="reviews">
+    <span class="section-tag">Reviews</span>
+    <h2 class="section-title">수강생이 들려주는 그레이스 가든</h2>
+    <p class="section-desc" style="margin:0 auto; color:var(--text-mid);">실제 수업과 공간 연출을 경험하신 분들의 이야기</p>
+
+    <div class="reviews-grid">
+      <div class="review-card fade-up">
+        <img class="review-img" src="images/바구니2.jpg" alt="후기 사진">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"꽃 한 송이도 허투루 다루지 않으세요. 처음 잡아보는 가위였는데도 마지막엔 제가 만든 꽃바구니가 너무 예뻐서 한참 들여다봤어요."</p>
+        <p class="review-author">Y. Han <span>· 일반 수강생</span></p>
+      </div>
+
+      <div class="review-card fade-up fade-up-delay">
+        <img class="review-img" src="images/신부대기실.jpg" alt="후기 사진">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"브라이덜 샤워 공간 연출을 맡겼는데, 제가 상상한 것보다 훨씬 더 따뜻하고 우아했어요. 손님들 모두 사진 찍느라 정신이 없으셨답니다."</p>
+        <p class="review-author">S. Kim <span>· 브라이덜 샤워 클라이언트</span></p>
+      </div>
+
+      <div class="review-card fade-up fade-up-delay2">
+        <img class="review-img" src="images/리스.jpg" alt="후기 사진">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"복지관 시니어 수업으로 만났는데 어머니가 매주 가는 날만 기다리세요. 손에 꽃을 들고 오시는 표정이 정말 행복해 보여요."</p>
+        <p class="review-author">J. Park <span>· 복지관 출강 수강생 가족</span></p>
+      </div>
+
+      <div class="review-card fade-up">
+        <img class="review-img" src="images/동양.jpg" alt="후기 사진">
+        <div class="review-stars">★★★★★</div>
+        <p class="review-text">"성당 제대 꽃을 정기적으로 부탁드리고 있습니다. 절기마다 다른 꽃의 이야기를 담아주세요. 신자분들 반응도 정말 좋습니다."</p>
+        <p class="review-author">M. Lee <span>· 성당 정기 클라이언트</span></p>
       </div>
     </div>
   </section>
@@ -1114,25 +1511,32 @@
     </p>
 
     <div class="contact-channels">
+      <div class="contact-channel kakao">
+            <a href="https://open.kakao.com/o/s2tgrpti" target="_blank" rel="noopener" class="contact-channel-icon" aria-label="카카오톡 1:1 오픈채팅">
+          <svg viewBox="0 0 24 24"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.78 1.86 5.22 4.66 6.59-.2.71-.74 2.65-.85 3.06-.13.51.19.5.4.36.16-.1 2.6-1.77 3.66-2.49.7.1 1.42.16 2.13.16 5.52 0 10-3.48 10-7.78S17.52 3 12 3z"/></svg>
+        </a>
+        <span>KAKAOTALK</span>
+        <a href="https://open.kakao.com/o/s2tgrpti" target="_blank" rel="noopener">1:1 오픈채팅 바로가기</a>
+      </div>
       <div class="contact-channel">
-        <a href="mailto:imjungin123@gmail.com" class="contact-channel-icon">
+        <a href="https://instagram.com/imjeongin33" target="_blank" rel="noopener" class="contact-channel-icon" aria-label="인스타그램">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+        </a>
+        <span>INSTAGRAM</span>
+        <a href="https://instagram.com/imjeongin33" target="_blank" rel="noopener">@imjeongin33</a>
+      </div>
+      <div class="contact-channel">
+        <a href="mailto:imjungin123@gmail.com" class="contact-channel-icon" aria-label="이메일">
           <svg viewBox="0 0 24 24"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
         </a>
         <span>EMAIL</span>
         <a href="mailto:imjungin123@gmail.com">imjungin123@gmail.com</a>
       </div>
-      <div class="contact-channel">
-        <a href="https://instagram.com/imjeongin33" target="_blank" class="contact-channel-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-        </a>
-        <span>INSTAGRAM</span>
-        <a href="https://instagram.com/imjeongin33" target="_blank">@imjeongin33</a>
-      </div>
     </div>
 
-    <a href="https://instagram.com/imjeongin33" class="contact-cta" target="_blank">
-      <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:currentColor;"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
-      인스타그램 문의하기
+    <a href="https://open.kakao.com/o/s2tgrpti" class="contact-cta kakao-cta" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#3C1E1E;"><path d="M12 3C6.48 3 2 6.48 2 10.8c0 2.78 1.86 5.22 4.66 6.59-.2.71-.74 2.65-.85 3.06-.13.51.19.5.4.36.16-.1 2.6-1.77 3.66-2.49.7.1 1.42.16 2.13.16 5.52 0 10-3.48 10-7.78S17.52 3 12 3z"/></svg>
+      카카오톡으로 문의하기
     </a>
   </section>
 
